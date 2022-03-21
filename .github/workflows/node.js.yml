@@ -30,6 +30,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     environment: prod
+    needs: build
     strategy:
       matrix:
         node-version: [16.x]
@@ -51,7 +52,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: prod
-    needs: build
+    needs: test
     steps:
     - name: Fetch source code files 
       uses: actions/checkout@v2
