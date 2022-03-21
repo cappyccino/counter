@@ -34,7 +34,7 @@ jobs:
     environment: prod
     needs: build
     steps:
-    - run: pwd
+    - uses: actions/checkout@v2
     - uses: citizen-of-planet-earth/cf-cli-action@master
       with:
         cf_api: ${{ secrets.CF_API }}
