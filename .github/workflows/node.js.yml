@@ -32,18 +32,11 @@ jobs:
           yarn audit --level high || exit_code=$?
           echo "::set-output name=EXIT_CODE::$exit_code"
 
-      - name: echo
-        if: always()
-        shell: bash
-        run: |
-            echo "${{ steps.run_yarn_audit.outputs.EXIT_CODE }}"
-
-      - name: Check yarn audit ${{ steps.run_yarn_audit.outputs.EXIT_CODE }}
-        if: always()
+      - name: Check yarn audit with code ${{ steps.run_yarn_audit.outputs.EXIT_CODE }}
+        if: ${{ steps.run_yarn_audit.outputs.EXIT_CODE > 12 }}
         uses: actions/github-script@v3
         with:
           script: |
-            console.log(${{ steps.run_yarn_audit.outputs.EXIT_CODE }})
             core.setFailed('High vulnerabilities found :(')
   test:
     runs-on: ubuntu-latest
