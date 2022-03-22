@@ -26,12 +26,13 @@ jobs:
       - run: yarn
       - name: run yarn audit
         id: run_yarn_audit
+        continue-on-error: true
         shell: pwsh
         run: |
           $exitcode = yarn audit --level high
           Write-Output "::set-output name=exitcode::$exitcode"
 
-      - name: Check yarn audit
+      - name: Check yarn audit ${{ steps.run_yarn_audit.outputs.exitcode }}
         if: ${{ steps.run_yarn_audit.outputs.exitcode >= 12 }}
         uses: actions/github-script@v3
         with:
