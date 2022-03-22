@@ -92,8 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     needs:
-      - test
-      - integration-test
+      - upload-artifact
     steps:
       - name: Fetch source code files
         uses: actions/checkout@v2
