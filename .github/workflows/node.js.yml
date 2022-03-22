@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           yarn audit --level high
-          echo "::set-output name=EXIT_CODE::$?"
+          echo "::set-output name=EXIT_CODE::12"
 
       - name: echo
         if: always()
