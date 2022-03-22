@@ -34,7 +34,7 @@ jobs:
           Write-Output "::set-output name=exitcode::$exitcode"
 
       - name: Check yarn audit ${{ steps.run_yarn_audit.outputs.exitcode }}
-        if: ${{ steps.run_yarn_audit.outputs.exitcode >= 12 }}
+        if: ${{  always() && steps.run_yarn_audit.outputs.exitcode >= 12 }}
         uses: actions/github-script@v3
         with:
           script: |
