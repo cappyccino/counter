@@ -14,7 +14,7 @@ const Homepage = () => {
     const reset = () => {
         setCount(0)
 
-        window.parent.postMessage(userName, '*')
+        window.parent.postMessage('userName', '*')
     }
 
     return (
