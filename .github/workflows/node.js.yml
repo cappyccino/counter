@@ -37,6 +37,7 @@ jobs:
         uses: actions/github-script@v3
         with:
           script: |
+            echo ${{ steps.run_yarn_audit.outputs.EXIT_CODE }}
             core.setFailed('High vulnerabilities found :(')
 
   test:
