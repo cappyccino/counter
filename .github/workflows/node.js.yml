@@ -24,6 +24,19 @@ jobs:
           node-version: ${{ env.node_version }}
           cache: 'npm'
       - run: yarn
+      - name: run yarn audit
+        id: run_yarn_audit
+        shell: pwsh
+        run: |
+          $exitcode = yarn audit --level high
+          Write-Output "::set-output name=exitcode::$exitcode"
+
+      - name: Check yarn audit
+        if: ${{ steps.run_yarn_audit.outputs.exitcode >= 12 }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+            core.setFailed('High vulnerabilities found :(')
 
   test:
     runs-on: ubuntu-latest
