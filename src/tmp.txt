@@ -3,6 +3,7 @@ import Homepage from "./Homepage";
 import React from "react";
 
 ######## Cypress test ########
+
 it('can be reset', () => {
     cy.visit('localhost:3000')
 
@@ -14,6 +15,8 @@ it('can be reset', () => {
     cy.contains('reset').click()
     cy.contains('Counter: 0')
 });
+
+######## Unit test ########
 
 it('can reset the counter', () => {
     render(<Homepage/>)
@@ -27,8 +30,13 @@ it('can reset the counter', () => {
     expect(screen.getByText('Counter: 0')).toBeInTheDocument()
 });
 
-<button className='reset' onClick={reset}>reset</button>
+######## Button Implementation WRONG ########
 
+<button className='reset' onClick={() => false)}>reset</button>
+
+######## Button Implementation ########
+
+<button className='reset' onClick={reset}>reset</button>
 
 const reset = () => {
     setCount(0)
