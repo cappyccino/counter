@@ -43,18 +43,6 @@ describe('The Homepage', () => {
         fireEvent.click(screen.getByText('decrement'))
         expect(screen.getByText('Counter: 0')).toBeInTheDocument()
     });
-
-    it('can reset the counter', () => {
-        render(<Homepage/>)
-
-        fireEvent.click(screen.getByText('increment'))
-        fireEvent.click(screen.getByText('increment'))
-        fireEvent.click(screen.getByText('increment'))
-        expect(screen.getByText('Counter: 3')).toBeInTheDocument()
-
-        fireEvent.click(screen.getByText('reset'))
-        expect(screen.getByText('Counter: 0')).toBeInTheDocument()
-    });
 });
 
 

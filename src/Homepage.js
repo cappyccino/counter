@@ -11,19 +11,12 @@ const Homepage = () => {
         }
     }
 
-    const reset = () => {
-        setCount(0)
-
-        window.parent.postMessage('userName', '*')
-    }
-
     return (
         <>
             <p>Counter: {count}</p>
             <div className='buttons'>
                 <button onClick={increment}>increment</button>
                 <button onClick={decrement}>decrement</button>
-                <button className='reset' onClick={reset}>reset</button>
             </div>
         </>
     );
