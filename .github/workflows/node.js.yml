@@ -110,8 +110,10 @@ jobs:
     needs:
       - upload-artifact
     steps:
-      - name: Fetch source code files
-        uses: actions/checkout@v2
+      - name: fetch artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: counter-app
       - name: Deploy to TAS
         uses: citizen-of-planet-earth/cf-cli-action@master
         with:
@@ -120,7 +122,7 @@ jobs:
           cf_password: ${{ secrets.CF_PASSWORD }}
           cf_org: ${{ secrets.CF_ORG }}
           cf_space: ${{ secrets.CF_SPACE }}
-          command: push counter-staging
+          command: push counter-staging -p counter-app/ -b staticfile_buildpack
 
   production:
     runs-on: ubuntu-latest
