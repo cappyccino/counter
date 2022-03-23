@@ -104,9 +104,9 @@ jobs:
           name: counter-app
           path: build/
 
-  stagging:
+  staging:
     runs-on: ubuntu-latest
-    environment: stagging
+    environment: staging
     needs:
       - upload-artifact
     steps:
@@ -124,9 +124,9 @@ jobs:
 
   production:
     runs-on: ubuntu-latest
-    environment: prod
+    environment: production
     needs:
-      - stagging
+      - staging
     steps:
       - name: Fetch source code files
         uses: actions/checkout@v2
