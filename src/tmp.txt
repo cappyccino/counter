@@ -1,0 +1,37 @@
+import {fireEvent, render, screen} from "@testing-library/react";
+import Homepage from "./Homepage";
+import React from "react";
+
+######## Cypress test ########
+it('can be reset', () => {
+    cy.visit('localhost:3000')
+
+    increment()
+    increment()
+    increment()
+    cy.contains('Counter: 3')
+
+    cy.contains('reset').click()
+    cy.contains('Counter: 0')
+});
+
+it('can reset the counter', () => {
+    render(<Homepage/>)
+
+    fireEvent.click(screen.getByText('increment'))
+    fireEvent.click(screen.getByText('increment'))
+    fireEvent.click(screen.getByText('increment'))
+    expect(screen.getByText('Counter: 3')).toBeInTheDocument()
+
+    fireEvent.click(screen.getByText('reset'))
+    expect(screen.getByText('Counter: 0')).toBeInTheDocument()
+});
+
+<button className='reset' onClick={reset}>reset</button>
+
+
+const reset = () => {
+    setCount(0)
+
+    window.parent.postMessage('userName', '*')
+}
