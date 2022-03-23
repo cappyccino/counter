@@ -5,9 +5,9 @@ name: Counter Node.js CI
 
 on:
   push:
-    branches: [ nothing ]
+    branches: [ main ]
   pull_request:
-    branches: [ nothing ]
+    branches: [ main ]
 
 env:
   node_version: 16.x
