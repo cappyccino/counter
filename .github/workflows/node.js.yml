@@ -104,11 +104,29 @@ jobs:
           name: counter-app
           path: build/
 
-  deploy:
+  stagging:
+    runs-on: ubuntu-latest
+    environment: stagging
+    needs:
+      - upload-artifact
+    steps:
+      - name: Fetch source code files
+        uses: actions/checkout@v2
+      - name: Deploy to TAS
+        uses: citizen-of-planet-earth/cf-cli-action@master
+        with:
+          cf_api: ${{ secrets.CF_API }}
+          cf_username: ${{ secrets.CF_USER }}
+          cf_password: ${{ secrets.CF_PASSWORD }}
+          cf_org: ${{ secrets.CF_ORG }}
+          cf_space: ${{ secrets.CF_SPACE }}
+          command: push counter
+
+  production:
     runs-on: ubuntu-latest
     environment: prod
     needs:
-      - upload-artifact
+      - stagging
     steps:
       - name: Fetch source code files
         uses: actions/checkout@v2
