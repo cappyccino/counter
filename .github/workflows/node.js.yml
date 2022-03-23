@@ -126,7 +126,7 @@ jobs:
           cf_password: ${{ secrets.CF_PASSWORD }}
           cf_org: ${{ secrets.CF_ORG }}
           cf_space: ${{ secrets.CF_SPACE }}
-          command: push counter-staging -p . -b staticfile_buildpack
+          command: push counter-staging -b staticfile_buildpack
 
   production:
     runs-on: ubuntu-latest
