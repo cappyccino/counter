@@ -79,11 +79,11 @@ jobs:
           echo "::set-output name=EXIT_CODE::$exit_code"
 
       - name: Check yarn audit with code ${{ steps.run_yarn_audit.outputs.EXIT_CODE }}
-        if: ${{ steps.run_yarn_audit.outputs.EXIT_CODE >= 12 }}
+        if: ${{ steps.run_yarn_audit.outputs.EXIT_CODE > 12 }}
         uses: actions/github-script@v3
         with:
           script: |
-            core.setFailed('High vulnerabilities found :(')
+            core.setFailed('Critical vulnerabilities found :(')
 
   upload-artifact:
     runs-on: ubuntu-latest
