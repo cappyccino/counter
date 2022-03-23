@@ -11,11 +11,11 @@ on:
 
 env:
   node_version: 16.x
+  severity_level: 12
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: prod
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ env.node_version }}
@@ -27,7 +27,6 @@ jobs:
 
   test:
     runs-on: ubuntu-latest
-    environment: prod
     needs: build
     steps:
       - uses: actions/checkout@v2
@@ -60,7 +59,6 @@ jobs:
 
   code-scan:
     runs-on: ubuntu-latest
-    environment: prod
     needs: build
     steps:
       - uses: actions/checkout@v2
@@ -72,22 +70,21 @@ jobs:
       - run: yarn
       - name: scan code
         id: run_yarn_audit
-        continue-on-error: true
         shell: bash
         run: |
           yarn audit --level high || exit_code=$?
           echo "::set-output name=EXIT_CODE::$exit_code"
 
       - name: Check yarn audit with code ${{ steps.run_yarn_audit.outputs.EXIT_CODE }}
-        if: ${{ steps.run_yarn_audit.outputs.EXIT_CODE > 12 }}
+        if: ${{ steps.run_yarn_audit.outputs.EXIT_CODE > env.severity_level }}
         uses: actions/github-script@v3
         with:
           script: |
             core.setFailed('Critical vulnerabilities found :(')
 
+
   upload-artifact:
     runs-on: ubuntu-latest
-    environment: prod
     needs:
       - test
       - integration-test
