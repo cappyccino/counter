@@ -1,0 +1,48 @@
+name: Counter Static CI
+
+on:
+  push:
+    branches: [ demo ]
+  pull_request:
+    branches: [ demo ]
+
+env:
+  node_version: 16.x
+  severity_level: 12
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ env.node_version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node_version }}
+          cache: 'npm'
+      - run: yarn
+
+  staging:
+    runs-on: ubuntu-latest
+    environment: staging
+    needs:
+      - build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ env.node_version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node_version }}
+          cache: 'npm'
+      - run: yarn
+      - name: Build App
+        run: yarn build
+      - name: Deploy to TAS
+        uses: citizen-of-planet-earth/cf-cli-action@master
+        with:
+          cf_api: ${{ secrets.CF_API }}
+          cf_username: ${{ secrets.CF_USER }}
+          cf_password: ${{ secrets.CF_PASSWORD }}
+          cf_org: ${{ secrets.CF_ORG }}
+          cf_space: ${{ secrets.CF_SPACE }}
+          command: push counter-staging -p build/ -b staticfile_buildpack
