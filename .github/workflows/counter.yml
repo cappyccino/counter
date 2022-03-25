@@ -110,7 +110,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: production
     needs:
-      - staging
+      - deploy-staging
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ env.node_version }}
