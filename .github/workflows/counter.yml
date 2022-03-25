@@ -79,9 +79,8 @@ jobs:
           script: |
             core.setFailed('Critical vulnerabilities found :(')
 
-  deploy-staging:
+  upload-artifact:
     runs-on: ubuntu-latest
-    environment: staging
     needs:
       - test
       - integration-test
@@ -96,6 +95,23 @@ jobs:
       - run: yarn
       - name: Build App
         run: yarn build
+      - uses: actions/upload-artifact@v3
+        with:
+          name: counter-app
+          path: build/
+
+  deploy-staging:
+    runs-on: ubuntu-latest
+    environment: staging
+    needs:
+      - test
+      - integration-test
+      - code-scan
+    steps:
+      - name: fetch artifact
+        uses: actions/download-artifact@v3
+        with:
+            name: counter-app
       - name: Deploy to TAS
         uses: citizen-of-planet-earth/cf-cli-action@master
         with:
@@ -104,7 +120,7 @@ jobs:
           cf_password: ${{ secrets.CF_PASSWORD }}
           cf_org: ${{ secrets.CF_ORG }}
           cf_space: ${{ secrets.CF_SPACE }}
-          command: push counter-staging -p build/ -b staticfile_buildpack
+          command: push counter-staging -b staticfile_buildpack
 
   deploy-production:
     runs-on: ubuntu-latest
@@ -112,15 +128,10 @@ jobs:
     needs:
       - deploy-staging
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ env.node_version }}
-        uses: actions/setup-node@v2
+      - name: fetch artifact
+        uses: actions/download-artifact@v3
         with:
-          node-version: ${{ env.node_version }}
-          cache: 'npm'
-      - run: yarn
-      - name: Build App
-        run: yarn build
+          name: counter-app
       - name: Deploy to TAS
         uses: citizen-of-planet-earth/cf-cli-action@master
         with:
@@ -129,4 +140,4 @@ jobs:
           cf_password: ${{ secrets.CF_PASSWORD }}
           cf_org: ${{ secrets.CF_ORG }}
           cf_space: ${{ secrets.CF_SPACE }}
-          command: push counter-prod -p build/ -b staticfile_buildpack
+          command: push counter-prod -b staticfile_buildpack
