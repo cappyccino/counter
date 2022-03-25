@@ -17,7 +17,7 @@ const Homepage = () => {
             <div className='buttons'>
                 <button onClick={increment}>increment</button>
                 <button onClick={decrement}>decrement</button>
-                <button onClick={() => false}>reset</button>
+                <button onClick={() => false} className="reset">reset</button>
             </div>
         </>
     );
