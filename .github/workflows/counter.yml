@@ -22,11 +22,25 @@ jobs:
           cache: 'npm'
       - run: yarn
 
-  staging:
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ env.node_version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.node_version }}
+          cache: 'npm'
+      - run: yarn
+      - name: Run tests
+        run: yarn test --ci --watchAll=false
+
+  deploy-staging:
     runs-on: ubuntu-latest
     environment: staging
     needs:
-      - build
+      - test
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ env.node_version }}
