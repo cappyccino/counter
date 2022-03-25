@@ -11,13 +11,15 @@ const Homepage = () => {
         }
     }
 
+    const reset = () => setCount(0)
+
     return (
         <>
             <p>Counter: {count}</p>
             <div className='buttons'>
                 <button onClick={increment}>increment</button>
                 <button onClick={decrement}>decrement</button>
-                <button onClick={() => false} className="reset">reset</button>
+                <button onClick={reset} className="reset">reset</button>
             </div>
         </>
     );
