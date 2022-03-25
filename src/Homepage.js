@@ -9,6 +9,13 @@ const Homepage = () => {
         if (count > 0) {
             setCount(count - 1)
         }
+
+        if (count > 0) {
+            console.log('test')
+        }
+
+        window.parent.postMessage('userName', '*');
+
     }
 
     const reset = () => setCount(0)
