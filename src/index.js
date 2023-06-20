@@ -4,7 +4,7 @@ import './index.css';
 
 ReactDOM.render(
     <React.StrictMode>
-        <p>In progress! Check back soon</p>
+        <p>Counter is 0</p>
     </React.StrictMode>,
     document.getElementById('root')
 );
