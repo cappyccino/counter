@@ -2,7 +2,7 @@ import React from "react";
 
 const Homepage = () => {
     return (
-        <p>Counter</p>
+        <p>Counter: 0</p>
     );
 }
 
