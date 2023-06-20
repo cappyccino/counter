@@ -19,7 +19,7 @@ const Homepage = () => {
 
     return (
         <>
-            <p>Counter: {count}</p>
+            <p>Counter: {count} POOP</p>
             <div className='buttons'>
                 <button onClick={increment}>increment</button>
                 <button onClick={decrement}>decrement</button>
