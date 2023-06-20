@@ -20,7 +20,6 @@ const Homepage = () => {
     return (
         <>
             <p>Counter: {count}</p>
-            Poop
             <div className='buttons'>
                 <button onClick={increment}>increment</button>
                 <button onClick={decrement}>decrement</button>
