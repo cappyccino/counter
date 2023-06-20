@@ -20,4 +20,8 @@ describe('The Homepage', () => {
         fireEvent.click(screen.getByText('increment'))
         expect(screen.getByText('Counter: 3')).toBeInTheDocument()
     });
+
+     it('fails', () => {
+         expect(false).toBeTruthy()
+     })
 });
