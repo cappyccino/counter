@@ -2,7 +2,7 @@ import React from "react";
 
 const Homepage = () => {
     return (
-        <p>In progress! Check back soon</p>
+        <p>Counter</p>
     );
 }
 
